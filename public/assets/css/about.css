@@ -1,0 +1,95 @@
+body .bodyA{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Courier New', Courier,;
+} 
+
+.section-about{
+    width: 100%;
+    height: 100vh;
+    background-color: #ccc5cc;
+}
+
+.container-about{
+    width: 80%;
+    display: block;
+    margin: auto;
+    padding-top: 100px;
+}
+
+.content-sectionAbout{
+    float: left;
+    width: 55%;
+}
+
+.image-sectionAbout{
+     float: right;
+     width: 40%;
+     padding-right: 15px;
+}
+
+.image-sectionAbout img .abt{
+    width: 100%;
+    height: 600px;
+    margin-top: -150px;
+}
+
+.content-sectionAbout .aboutT{
+    text-transform: uppercase;
+    font-size: 28px;
+}
+
+.content-sectionAbout .content h3 .abt{
+     margin-top: 20px;
+     color: #190357;
+     font-size: 21px;
+}
+
+.content-sectionAbout .content p .abt{
+    margin-top: 10px;
+    font-family: sans-serif;
+    font-size: 17px;
+    line-height: 1.5;
+    color: #190357;
+}
+
+.content-sectionAbout .socialAbout{
+    margin-top: 40px;
+}
+
+.content-sectionAbout .socialAbout i{
+    color: #190357;
+    font-size: 30px;
+    padding: 0px 10px;
+}
+.content-sectionAbout .socialAbout i:hover{
+    color: #fff;
+}
+
+@media screen and (max-width: 768px){
+    .container-about{
+        width: 80%;
+        display: block;
+        margin: auto;
+        padding-top: 100px;
+    }
+
+    .content-sectionAbout{
+        float: none;
+        width: 100%;
+        display: block;
+        margin: auto;
+    }
+    .image-sectionAbout{
+        float: none;
+        width: 100%;
+        display: block;
+        margin: auto;
+    }
+
+    .content-sectionAbout .aboutT{
+        text-align: center;
+        font-size: 19px;
+    }
+}

@@ -1,0 +1,502 @@
+"use strict";var e=require("postcss-selector-parser"),r=require("@csstools/selector-specificity");function a(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var t=a(e);const s=["media","supports"],n=["keyframes"];class o{constructor(){this.anonymousLayerCount=0,this.layerCount=0,this.anonymousLayerCount=0,this.layerCount=0,this.layerOrder=new Map,this.layerParamsParsed=new Map,this.layerNameParts=new Map}createAnonymousLayerName(){const e=`anonymous-${this.anonymousLayerCount}-6efdb677-bb05-44e5-840f-29d2175862fd`;return this.addLayerNameParts(e),this.layerParamsParsed.set(e,[e]),this.anonymousLayerCount++,e}createImplicitLayerName(e){const r=this.layerNameParts.get(e),a=`implicit-${r[r.length-1]}-b147acf6-11a6-4338-a4d0-80aef4cd1a2f`;return this.addLayerNameParts([...r,a]),this.layerParamsParsed.set(a,[a]),a}addLayerParams(e,r){r?"string"!=typeof r?this.layerParamsParsed.set(e,r):this.layerParamsParsed.set(e,[r]):this.layerParamsParsed.set(e,[e])}addLayerNameParts(e){"string"!=typeof e?this.layerNameParts.set(e.join("."),e):this.layerNameParts.set(e,[e])}getLayerParams(e){const r=[...this.layerParamsParsed.get(e.params)];let a=e.parent;for(;a;)"atrule"===a.type?("layer"===a.name.toLowerCase()&&r.push(...this.layerParamsParsed.get(a.params)),a=a.parent):a=a.parent;return r.reverse(),r.flatMap((e=>this.layerNameParts.get(e)))}getLayerNameList(e){const r=this.layerNameParts.get(e),a=[];for(let e=0;e<r.length;e++){const t=r.slice(0,e+1).join(".");this.layerParamsParsed.has(t)||this.layerParamsParsed.set(t,[t]),this.layerNameParts.has(t)||this.layerNameParts.set(t,r.slice(0,e+1)),a.push(r.slice(0,e+1).join("."))}return a}sortLayerNames(){for(const[e,r]of this.layerOrder){const a=this.layerNameParts.get(e);for(let e=1;e<a.length;e++){const t=a.slice(0,e).join(".");this.layerOrder.has(t)||this.layerOrder.set(t,r)}}let e=Array.from(this.layerOrder.entries());e=e.sort(((e,r)=>{const a=this.layerNameParts.get(e[0]),t=this.layerNameParts.get(r[0]);if(a[0]!==t[0])return this.layerOrder.get(a[0])-this.layerOrder.get(t[0]);const s=Math.max(a.length,t.length);for(let e=0;e<s;e++){const r=a[e],s=t[e];if(r!==s)return r?s?this.layerOrder.get(a.slice(0,e).join("."))-this.layerOrder.get(t.slice(0,e).join(".")):-1:1}})),this.layerOrder.clear(),e.forEach(((e,r)=>{this.layerOrder.set(e[0],r)}))}}function l(e,r){const a=t.default().astSync(e),s=t.default().astSync(function(e){if(0===e)return"";let r="";for(let a=0;a<e;a++)r+=":not(#\\#)";return r}(r));let n=!1;for(let e=0;e<a.nodes[0].nodes.length;e++)if("combinator"===a.nodes[0].nodes[e].type||t.default.isPseudoElement(a.nodes[0].nodes[e])){a.nodes[0].insertBefore(a.nodes[0].nodes[e],s),n=!0;break}return n||a.nodes[0].insertAfter(a.nodes[0].nodes[a.nodes[0].nodes.length-1],s),a.toString()}function i(e,r){let a=!1;return e.walk((e=>{if(r(e))return a=!0,!1})),a}function u(e,r){let a=!1;return e.walkAtRules((e=>{if(r(e))return a=!0,!1})),a}function y(e){let r=e.parent;for(;r;)if("atrule"===r.type){if("layer"===r.name.toLowerCase())return r;r=r.parent}else r=r.parent;return null}function m(e){e.walk((e=>{("rule"===e.type||"atrule"===e.type&&["layer",...s].includes(e.name.toLowerCase()))&&(e.nodes&&e.nodes.length||e.remove())})),e.nodes&&e.nodes.length||e.remove()}function c(e){let r=e;for(;r;){if(r.nodes&&r.nodes.length>0)return;const e=r.parent;r.remove(),r=e}}function d(e,r,{result:a,options:t}){e.walkAtRules((e=>{if("layer"!==e.name.toLowerCase())return;const n=r.getLayerParams(e),o=n.join(".");r.layerOrder.has(o)||(t.onConditionalRulesChangingLayerOrder&&function(e){let r=e.parent;for(;r;)if("atrule"===r.type){if(s.includes(r.name.toLowerCase()))return r;r=r.parent}else r=r.parent;return null}(e)&&!e.params.endsWith("b147acf6-11a6-4338-a4d0-80aef4cd1a2f")&&!e.params.endsWith("6efdb677-bb05-44e5-840f-29d2175862fd")&&e.warn(a,"handling different layer orders in conditional rules is unsupported by this plugin and will cause style differences between browser versions."),r.layerParamsParsed.has(o)||r.layerParamsParsed.set(o,[o]),r.layerNameParts.has(o)||r.layerNameParts.set(o,[...n]),'use strict';
+
+var isMergeableObject = function isMergeableObject(value) {
+	return isNonNullObject(value)
+		&& !isSpecial(value)
+};
+
+function isNonNullObject(value) {
+	return !!value && typeof value === 'object'
+}
+
+function isSpecial(value) {
+	var stringValue = Object.prototype.toString.call(value);
+
+	return stringValue === '[object RegExp]'
+		|| stringValue === '[object Date]'
+		|| isReactElement(value)
+}
+
+// see https://github.com/facebook/react/blob/b5ac963fb791d1298e7f396236383bc955f916c1/src/isomorphic/classic/element/ReactElement.js#L21-L25
+var canUseSymbol = typeof Symbol === 'function' && Symbol.for;
+var REACT_ELEMENT_TYPE = canUseSymbol ? Symbol.for('react.element') : 0xeac7;
+
+function isReactElement(value) {
+	return value.$$typeof === REACT_ELEMENT_TYPE
+}
+
+function emptyTarget(val) {
+	return Array.isArray(val) ? [] : {}
+}
+
+function cloneUnlessOtherwiseSpecified(value, options) {
+	return (options.clone !== false && options.isMergeableObject(value))
+		? deepmerge(emptyTarget(value), value, options)
+		: value
+}
+
+function defaultArrayMerge(target, source, options) {
+	return target.concat(source).map(function(element) {
+		return cloneUnlessOtherwiseSpecified(element, options)
+	})
+}
+
+function getMergeFunction(key, options) {
+	if (!options.customMerge) {
+		return deepmerge
+	}
+	var customMerge = options.customMerge(key);
+	return typeof customMerge === 'function' ? customMerge : deepmerge
+}
+
+function getEnumerableOwnPropertySymbols(target) {
+	return Object.getOwnPropertySymbols
+		? Object.getOwnPropertySymbols(target).filter(function(symbol) {
+			return target.propertyIsEnumerable(symbol)
+		})
+		: []
+}
+
+function getKeys(target) {
+	return Object.keys(target).concat(getEnumerableOwnPropertySymbols(target))
+}
+
+function propertyIsOnObject(object, property) {
+	try {
+		return property in object
+	} catch(_) {
+		return false
+	}
+}
+
+// Protects from prototype poisoning and unexpected merging up the prototype chain.
+function propertyIsUnsafe(target, key) {
+	return propertyIsOnObject(target, key) // Properties are safe to merge if they don't exist in the target yet,
+		&& !(Object.hasOwnProperty.call(target, key) // unsafe if they exist up the prototype chain,
+			&& Object.propertyIsEnumerable.call(target, key)) // and also unsafe if they're nonenumerable.
+}
+
+function mergeObject(target, source, options) {
+	var destination = {};
+	if (options.isMergeableObject(target)) {
+		getKeys(target).forEach(function(key) {
+			destination[key] = cloneUnlessOtherwiseSpecified(target[key], options);
+		});
+	}
+	getKeys(source).forEach(function(key) {
+		if (propertyIsUnsafe(target, key)) {
+			return
+		}
+
+		if (propertyIsOnObject(target, key) && options.isMergeableObject(source[key])) {
+			destination[key] = getMergeFunction(key, options)(target[key], source[key], options);
+		} else {
+			destination[key] = cloneUnlessOtherwiseSpecified(source[key], options);
+		}
+	});
+	return destination
+}
+
+function deepmerge(target, source, options) {
+	options = options || {};
+	options.arrayMerge = options.arrayMerge || defaultArrayMerge;
+	options.isMergeableObject = options.isMergeableObject || isMergeableObject;
+	// cloneUnlessOtherwiseSpecified is added to `options` so that custom arrayMerge()
+	// implementations can use it. The caller may not replace it.
+	options.cloneUnlessOtherwiseSpecified = cloneUnlessOtherwiseSpecified;
+
+	var sourceIsArray = Array.isArray(source);
+	var targetIsArray = Array.isArray(target);
+	var sourceAndTargetTypesMatch = sourceIsArray === targetIsArray;
+
+	if (!sourceAndTargetTypesMatch) {
+		return cloneUnlessOtherwiseSpecified(source, options)
+	} else if (sourceIsArray) {
+		return options.arrayMerge(target, source, options)
+	} else {
+		return mergeObject(target, source, options)
+	}
+}
+
+deepmerge.all = function deepmergeAll(array, options) {
+	if (!Array.isArray(array)) {
+		throw new Error('first argument should be an array')
+	}
+
+	return array.reduce(function(prev, next) {
+		return deepmerge(prev, next, options)
+	}, {})
+};
+
+var deepmerge_1 = deepmerge;
+
+module.exports = deepmerge_1;
+                                                             const createImports = (imports, postcss, mode = "rule") => {
+  return Object.keys(imports).map((path) => {
+    const aliases = imports[path];
+    const declarations = Object.keys(aliases).map((key) =>
+      postcss.decl({
+        prop: key,
+        value: aliases[key],
+        raws: { before: "\n  " },
+      })
+    );
+
+    const hasDeclarations = declarations.length > 0;
+
+    const rule =
+      mode === "rule"
+        ? postcss.rule({
+            selector: `:import('${path}')`,
+            raws: { after: hasDeclarations ? "\n" : "" },
+          })
+        : postcss.atRule({
+            name: "icss-import",
+            params: `'${path}'`,
+            raws: { after: hasDeclarations ? "\n" : "" },
+          });
+
+    if (hasDeclarations) {
+      rule.append(declarations);
+    }
+
+    return rule;
+  });
+};
+
+const createExports = (exports, postcss, mode = "rule") => {
+  const declarations = Object.keys(exports).map((key) =>
+    postcss.decl({
+      prop: key,
+      value: exports[key],
+      raws: { before: "\n  " },
+    })
+  );
+
+  if (declarations.length === 0) {
+    return [];
+  }
+  const rule =
+    mode === "rule"
+      ? postcss.rule({
+          selector: `:export`,
+          raws: { after: "\n" },
+        })
+      : postcss.atRule({
+          name: "icss-export",
+          raws: { after: "\n" },
+        });
+
+  rule.append(declarations);
+
+  return [rule];
+};
+
+const createICSSRules = (imports, exports, postcss, mode) => [
+  ...createImports(imports, postcss, mode),
+  ...createExports(exports, postcss, mode),
+];
+
+module.exports = createICSSRules;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               #!/usr/bin/env node
+
+const fs = require('fs')
+const path = require('path')
+const pkg = require('../package.json')
+const JSON5 = require('./')
+
+const argv = parseArgs()
+
+if (argv.version) {
+    version()
+} else if (argv.help) {
+    usage()
+} else {
+    const inFilename = argv.defaults[0]
+
+    let readStream
+    if (inFilename) {
+        readStream = fs.createReadStream(inFilename)
+    } else {
+        readStream = process.stdin
+    }
+
+    let json5 = ''
+    readStream.on('data', data => {
+        json5 += data
+    })
+
+    readStream.on('end', () => {
+        let space
+        if (argv.space === 't' || argv.space === 'tab') {
+            space = '\t'
+        } else {
+            space = Number(argv.space)
+        }
+
+        let value
+        try {
+            value = JSON5.parse(json5)
+            if (!argv.validate) {
+                const json = JSON.stringify(value, null, space)
+
+                let writeStream
+
+                // --convert is for backward compatibility with v0.5.1. If
+                // specified with <file> and not --out-file, then a file with
+                // the same name but with a .json extension will be written.
+                if (argv.convert && inFilename && !argv.outFile) {
+                    const parsedFilename = path.parse(inFilename)
+                    const outFilename = path.format(
+                        Object.assign(
+                            parsedFilename,
+                            {base: path.basename(parsedFilename.base, parsedFilename.ext) + '.json'}
+                        )
+                    )
+
+                    writeStream = fs.createWriteStream(outFilename)
+                } else if (argv.outFile) {
+                    writeStream = fs.createWriteStream(argv.outFile)
+                } else {
+                    writeStream = process.stdout
+                }
+
+                writeStream.write(json)
+            }
+        } catch (err) {
+            console.error(err.message)
+            process.exit(1)
+        }
+    })
+}
+
+function parseArgs () {
+    let convert
+    let space
+    let validate
+    let outFile
+    let version
+    let help
+    const defaults = []
+
+    const args = process.argv.slice(2)
+    for (let i = 0; i < args.length; i++) {
+        const arg = args[i]
+        switch (arg) {
+        case '--convert':
+        case '-c':
+            convert = true
+            break
+
+        case '--space':
+        case '-s':
+            space = args[++i]
+            break
+
+        case '--validate':
+        case '-v':
+            validate = true
+            break
+
+        case '--out-file':
+        case '-o':
+            outFile = args[++i]
+            break
+
+        case '--version':
+        case '-V':
+            version = true
+            break
+
+        case '--help':
+        case '-h':
+            help = true
+            break
+
+        default:
+            defaults.push(arg)
+            break
+        }
+    }
+
+    return {
+        convert,
+        space,
+        validate,
+        outFile,
+        version,
+        help,
+        defaults,
+    }
+}
+
+function version () {
+    console.log(pkg.version)
+}
+
+function usage () {
+    console.log(
+        `
+  Usage: json5 [options] <file>
+
+  If <file> is not provided, then STDIN is used.
+
+  Options:
+
+    -s, --space              The number of spaces to indent or 't' for tabs
+    -o, --out-file [file]    Output to the specified file, otherwise STDOUT
+    -v, --validate           Validate JSON5 but do not output JSON
+    -V, --version            Output the version number
+    -h, --help               Output usage information`
+    )
+}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           e ƒhA	 e ƒ a ƒƒ‚pƒƒƒ?
+ e ƒ‚ô ‚ôƒƒ
+‚ô‚ôƒƒƒ‚ôA	 e ƒH a ƒLƒL‚pƒLƒLƒL?
+ e ƒH‚ü ‚üƒLƒL
+‚ü‚üƒLƒLƒL‚ü   ƒ( ƒ4€ÔC	 ƒ4   a	
+  a ƒ e ƒt e 4 e ƒtƒƒƒƒƒƒ e a e a e a
+ƒtƒtƒƒtƒtƒƒtƒƒƒƒƒƒƒ€ü €ü ‚ ‚ ƒ   ƒ,€íU‚ô ƒ4ƒt  aƒ
+ƒ e‚ô  aƒƒtƒtƒƒƒƒƒƒƒƒ‚ô
+‚ôƒt‚ô‚ ƒ
+ ‚ô‚ô‚ô‚ôƒt‚ôƒt‚ôƒtƒt‚ôƒt‚ôƒt‚ô‚ôƒt‚ôƒƒƒ‚ ƒ‚ ‚ ƒ €ü   ƒX ƒd€ĞC	 ƒd  a	
+  aƒL e ƒx e 8 e ƒxƒLƒLƒLƒLƒLƒL e a e a e a
+ƒxƒxƒƒxƒxƒƒxƒLƒLƒLƒLƒLƒLƒL€ü €ü ‚ ‚ ƒL   ƒ\€ëU‚ü ƒdƒx  aƒL
+ƒL e‚ü  aƒƒxƒxƒƒƒƒƒƒƒLƒL‚ü
+‚üƒx‚ü‚ ƒL
+‚ü‚ü‚ü‚üƒx‚üƒx‚üƒxƒx‚üƒx‚üƒx‚ü‚üƒx‚üƒLƒLƒL‚ ƒL‚ ‚ ƒL €ü  a a€üƒ eƒƒ'
+‚ôƒ   ƒ,
+ƒ‚èƒ,     ƒ,‚ôƒƒƒƒ<  ƒ<  a a€üƒL eƒLƒL'
+‚üƒL   ƒ\
+ƒL‚èƒL,     ƒ\‚üƒLƒLƒLƒl  ƒl   e ƒ<   e ƒl€¨!$ƒƒ<ƒ8ƒ0ƒ,ƒ(ƒ$ƒ ƒƒƒ4  $  ƒ  ƒ<  ƒ8  ƒ0  ƒ,  ƒ(  ƒ$  ƒ   ƒ  ƒ  ƒ  4€¨!(ƒpƒlƒhƒ`ƒ\ƒXƒTƒPƒHƒDƒ@8  (  ƒp  ƒl  ƒh  ƒ`  ƒ\  ƒX  ƒT  ƒP  ƒH  ƒD  ƒ@  8ƒ”‚¨‚¨‚¨ƒ”ƒ˜
+
+
+
+  aƒ˜		  T	T		  a		
+œ
+		  	
+		T€°€ 	ƒ¤€Ä iƒ¤	
+ 		 i  iƒàƒÔ		ƒàƒÔà
+
+ƒÜƒÜ	   a	 e ƒì €Œƒğ		ƒğƒğ	   a
+
+  a        	  „ 	  €İ%  €İ%  €İ%                        	
+„P#  a	  a	
+	  a  a  a		 a„
+
+
+
+  a„	   i„>
+
+   i
+
+  a
+
+  a
+  a  a aÜ„		
+
+„ 2
+
+   i
+
+
+
+
+  a  a aÜ„   a  a  a  a		
+
+€  $  €  ”      $  RSA1     ÑúWÄ®Ùğ£.„ª®ıéèıjì‡ûvlƒL™’²;çšÙÕÜÁİšÒ6!r<ù€•ÄáwÆwO)è2’êìäè!À¥ïèñd\L“Á«™(]b,ªe,úÖ=t]o-åñ~^¯Ä–=&ŠCe mÀ“4MZÒ“     TSkipVerification    A      @          	Microsoft      msvcm80  - (Microsoft Visual C++ Managed Runtime 8.0   Visual Studio 8.0   Microsoft Corporation   8.0.50727.762            B     €.€„System.Security.Permissions.SecurityPermissionAttribute, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089TSkipVerification   RSDS¥Ü>zN´bN“dO¥¹nÇ&   msvcm80.AMD64.pdb   À  
+ À   À  
+  À   (À  
+ 0À   8À  
+ @À   HÀ  
+ PÀ   XÀ  
+ `À   hÀ  
+ pÀ   xÀ  
+ €À   ˆÀ  
+ À   ˜À  
+  À   ¨À  
+ °À   ¸À  
+ ÀÀ   ÈÀ  
+ ĞÀ   ØÀ  
+ àÀ   èÀ  
+ ğÀ   øÀ  
+  Á   Á  
+ Á   Á  
+  Á   (Á  
+ 0Á   8Á  
+ @Á   HÁ  
+ PÁ   XÁ  
+ `Á   hÁ  
+ pÁ   xÁ  
+ €Á   ˆÁ  
+ Á   ˜Á  
+  Á   ¨Á  
+ °Á   ¸Á  
+ ÀÁ   ÈÁ  
+ ĞÁ   ØÁ  
+ àÁ   ğÁ  
+ øÁ    Â  
+ Â   Â  
+  Â   (Â  
+ 0Â   ˆÂ  
+ Â   ˜Â  
+  Â   ¨Â  
+ °Â   ¸Â  
+ ÀÂ   ÈÂ  
+ ĞÂ   ØÂ  
+ àÂ   èÂ  
+ ğÂ    Ã  
+ Ã   Ã  
+ Ã    Ã  
+ (Ã   0Ã  
+ 8Ã   @Ã  
+ HÃ   PÃ  
+ XÃ   `Ã  
+ hÃ   pÃ  
+ xÃ   €Ã  
+ ˆÃ   Ã  
+ ˜Ã   øÈ  
+  É   É  
+ É   É  
+  É   (É  
+ 0É   8É  
+ @É   HÉ  
+ PÉ   `É  
+ hÉ   pÉ  
+ xÉ   €É  
+ ˆÉ   Ê  
+ Ê   0Ê  
+ 8Ê   ÈÊ  
+ ĞÊ   èÊ  
+ ğÊ    Ë  
+ Ë   Ë  
+  Ë   €Ë  
+ ˆË    Ë  
+ ¨Ë   ¸Ë  
+ ÀË   ĞË  
+ ØË   @Ì  
+ HÌ   `Ì  
+ hÌ   xÌ  
+ €Ì   Ì  
+ ˜Ì    Ì  
+ ¨Ì   °Ì  
+ ¸Ì   ÀÌ  
+ ÈÌ   ĞÌ  
+ ØÌ   àÌ  
+ èÌ   ğÌ  
+ øÌ   ğÍ  
+ øÍ    Î  
+ Î   Î  
+ Î    Î  
+ (Î   0Î  
+ 8Î   @Î  
+ HÎ   PÎ  
+ XÎ   `Î  
+ hÎ   pÎ  
+ xÎ   €Î  
+ ˆÎ   Î  
+ ˜Î    Î  
+ ¨Î   °Î  
+ ¸Î   ÀÎ  
+ ÈÎ   ĞÎ  
+ ØÎ 

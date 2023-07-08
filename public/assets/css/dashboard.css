@@ -1,0 +1,307 @@
+body .bodyD{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    color: #ccc5cc;
+} 
+a{
+    text-decoration: none;
+}
+
+li .dash{
+    list-style: none;
+}
+
+h1.dash, h2 .dash{
+    color: #c5112c;
+}
+h3 .dash{
+    color: #c5112c;
+}
+.btnD{
+    background: #c5112c;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+}
+.btnD:hover{
+    color: #c5112c;
+    background: white;
+    padding: 3px 8px;
+    border: 2px solid #c5112c;   
+   }
+   .titleD{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 15px 10px;
+    border-bottom:  2px solid #999;
+}
+table .dash{
+padding: 10px;
+}
+th .dash,td .dash{
+text-align: left;
+padding: 8px ;
+color: #190357;
+
+}
+
+.side-menuD:hover,nav.side-menuD.expanded {
+    width:250px;
+    overflow:visible;
+    }
+    
+    .side-menuD {
+        width: 20vw;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      background:#190357;
+      border-right:1px solid #190357;
+      position:absolute;
+      top:0;
+      bottom:0;
+      height:100%;
+      overflow:hidden;
+      -webkit-transition:width .05s linear;
+      transition:width .05s linear;
+      -webkit-transform:translateZ(0) scale(1,1);
+      transform: translateZ(0) scale(1,1);;
+      z-index:1000;
+      }
+.side-menuD ul .dash{
+    margin-top: 40px;
+}
+
+.side-menuD .brand-name{
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.side-menuD li .dash img .dash{
+    position:relative;
+    display:table;
+    border-collapse:collapse;
+    border-spacing:0;
+    color:#999;
+     font-family: arial;
+    font-size: 14px;
+    text-decoration:none;
+    -webkit-transform:translateZ(0) scale(1,1);
+    transform: translateZ(0) scale(1,1);;
+    -webkit-transition:all .1s linear;
+    transition:all .1s linear;
+      
+    }
+.side-menuD li .dash{
+    font-size: 15px;
+    padding: 10px 40px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.side-menuDashboard li.dash:hover{
+    background: white;
+    color: #c5112c;
+}
+.searchD img.dash:hover{
+    background: #190357;
+}
+.userD img.dash:hover{
+    background: #190357;
+}
+.img-caseD img.dash:hover{
+    background: #190357;
+}
+
+.containerD{
+    position: absolute;
+    right: 0;
+    width: 80vw;
+    height: 100vh;
+    background: #f1f1f1;
+}
+.containerD .headerD{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80vw;
+    height: 10vh;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.2);
+    z-index: 1;
+}
+.containerD .headerD .navD{
+    width: 90%;
+    display: flex;
+    align-items: center;
+}
+.containerD  .headerD .navD .searchD{
+    flex: 3;
+    display: flex;
+    justify-content: center;
+}
+
+.containerD .headerD .navD .searchD input.dash[type=text]{
+    border: none;
+    background: #f1f1f1;
+    padding: 10px;
+    width: 50%;
+}
+.containerD .headerD .navD .searchD button.dash{
+    width: 40px;
+    height: 40px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.containerD .headerD .navD .searchD button.dash img.dash{
+    width: 30px;
+    height: 30px;
+
+}
+.containerD .headerD .navD .userD{
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.containerD .headerD .navD .userD img.dash{
+    width: 40px;
+    height: 40px;
+}
+.containerD .headerD .navD .userD .img-caseD{
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+.containerD .headerD .navD .userD .img-caseD img.dash{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.containerD .contentD{
+    position: relative;
+    margin-top: 10vh;
+    min-height: 90vh;
+    background: #f1f1f1;
+}
+.containerD .contentD .cardsD{
+    padding: 15px 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.containerD .contentD .cardsD .cardD{
+    width: 250px;
+    height: 150px;
+    background: white;
+    margin: 15px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.containerD .contentD .content-2D{
+    min-height: 60vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+.containerD .contentD .content-2D .recent-paymentsD {
+    min-height: 50vh;
+    flex:5;
+    background: white;
+    margin:  0 25px 25px 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    display: flex;
+    flex-direction: column;
+}
+.containerD .contentD .content-2D .new-studentsD{
+    flex: 2;
+    background: white;
+    min-height: 50vh;
+    margin: 0 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.containerD .contentD .content-2D .new-studentsD table.dash td.dash:nth-child(1) img.dash{
+    height: 40px;
+    width: 40px;
+}
+
+@media screen and (max-width: 1050px) {
+    .side-menuD li.dash{
+        font-size: 18px;
+    }
+}
+@media screen and (max-width: 940px){
+    .side-menuD li.dash span.dash{
+        display: none;
+    }
+.side-menuD{
+    align-items: center;
+}
+.side-menuD li.dash img.dash{
+    width: 40px;
+    height: 40px;
+}
+.side-menuD li.dash:hover{
+background: #ccc5cc;
+padding: 8px 38px;
+border: 2px solid white;
+}
+
+
+
+@media screen  and (max-width:536px){
+    .brand-name h1.dash{
+font-size: 16px;
+    }
+  .containerD .contentD .cardsD{
+    justify-content: center;
+  }  
+.side-menuD li.dash img.dash{
+    width: 30px;
+    height: 30px;
+}
+.containerD .contentD .content-2D .recent-paymentsD table.dash th.dash:nth-child(2),
+.containerD .contentD .content-2D .recent-paymentsD table.dash td.dash:nth-child(2){
+display:none ;    
+}
+
+}
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

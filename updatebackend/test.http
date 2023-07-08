@@ -1,0 +1,14 @@
+PUT http://localhost:4002/app/Profile
+Content-Type: application/json 
+
+{
+    "Surname": "Olabiyi",
+    "OtherName": "Oluwaferanmi",
+    "Email": "Pheranmyolabiyigmail.com",
+    "Username": "Pheranmy",
+    "Password": "12345",
+    "ConfirmPssword": "12345",
+}
+
+//dont leave a space after line 1
+//wrap your contents in quotes since it is a json file

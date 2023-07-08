@@ -1,0 +1,10 @@
+GET  http://localhost:4001/app/Sign
+Content-Type: application/json 
+
+{
+    "Username": "Pheranmy",
+    "Password": "12345",
+}
+
+//dont leave a space after line 1
+//wrap your contents in quotes since it is a json file

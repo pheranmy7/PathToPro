@@ -1,0 +1,22 @@
+body .bodyC{
+    background-color: #ccc5cc;
+    min-height: 40vh;
+    font-family: 'Courier New', Courier,;
+    font-size: 20px;
+} 
+
+h1 h2 h3 .com{
+    color: #c5112c;
+}
+p .com{
+    color: #190351;
+}
+li .com{
+    color: #190351;
+    margin-top: 20px;
+}
+.borderC{
+    border-style: solid;
+    border-color: #190351;
+    border-radius: 10px;
+}

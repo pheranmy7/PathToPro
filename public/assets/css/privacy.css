@@ -1,0 +1,19 @@
+body .bodypriv{
+    background-color: #ccc5cc;
+    min-height: 40vh;
+    font-family: 'Courier New', Courier,;
+    font-size: 12.5px;
+} 
+
+h1.priv h2.priv h3.priv{
+    color: #c5112c;
+}
+p{
+    color: #190351;
+}
+
+.borderP{
+    border-style: solid;
+    border-color: #190351;
+    border-radius: 10px;
+}

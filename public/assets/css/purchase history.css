@@ -1,0 +1,220 @@
+body .bodyH{
+    padding: 0px;
+    box-sizing: border-box;
+    
+    
+}
+
+
+
+.side-menuH:hover,nav.side-menuH.expanded {
+    width:250px;
+    overflow:visible;
+    }
+    
+    .side-menuH {
+        width: 18vw;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      background:#190357;
+      border-right:1px solid #190357;
+      position:absolute;
+      top:0;
+      bottom:0;
+      height:950px;
+      overflow:hidden;
+      -webkit-transition:width .05s linear;
+      transition:width .05s linear;
+      -webkit-transform:translateZ(0) scale(1,1);
+      transform: translateZ(0) scale(1,1);;
+      z-index:1000;
+      }
+.side-menuH ul.pur{
+    margin-top: 90px;
+}
+
+
+.side-menuH li.pur img.pur{
+    position:relative;
+    display:table;
+    border-collapse:collapse;
+    border-spacing:0;
+    color:#999;
+     font-family: arial;
+    font-size: 14px;
+    text-decoration:none;
+    -webkit-transform:translateZ(0) scale(1,1);
+    transform: translateZ(0) scale(1,1);;
+    -webkit-transition:all .1s linear;
+    transition:all .1s linear;
+      
+    }
+.side-menuH li.pur{
+    font-size: 15px;
+    padding: 29px 40px;
+    color: white;
+    display: flex;
+    align-items: center;
+}
+
+.side-menuH li.pur:hover{
+    background: white;
+    color: #c5112c;
+}
+.searchH img.pur:hover{
+    background: #190357;
+}
+.userH img.pur:hover{
+    background: #190357;
+}
+.img-caseH img.pur:hover{
+    background: #190357;
+}
+
+.containerH{
+    position: absolute;
+    right: 0;
+    width: 80vw;
+    height: 100vh;
+    background: #f1f1f1;
+}
+.containerH .headerH{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80vw;
+    height: 10vh;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 8px 0 rgb(0, 0, 0, 0.2);
+    z-index: 1;
+}
+.containerH .headerH .navH{
+    width: 90%;
+    display: flex;
+    margin-left: 1000px;
+    padding: 10px;
+
+}
+.containerH .headerH .navH .userH{
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.containerH .headerH .navH .userH img.pur{
+    width: 40px;
+    height: 40px;
+}
+.containerH .headerH .navH .userH .img-caseH{
+    position: relative;
+    width: 50px;
+    height: 50px;
+}
+.containerH .headerH .navH .userH .img-caseH img.pur{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+h1.pur{
+    text-align: center;
+    color: #c5112c;
+}
+
+.containerH {
+    height: 25px;
+    background-color: #190375;
+    color: #ccc5cc;
+    text-align: justify;
+    font-size: 20px;
+
+}
+.pur.containH{
+    padding-top: 50px;
+    min-height: 100vh;
+    background-color: #ccc5cc;
+    min-height: 100vh;
+    height: 100%;
+ }
+
+.tableH {
+    width: 1200px;
+    box-shadow: -1px 12px 12px -6px ;
+    padding: 20px;
+    border: 10px #c5112c;
+    text-align: center;
+}
+
+.tableH,td.pur,tr.pur,th.pur{
+    padding: 40px;
+    border: 1px solid #c5112c;
+    border-collapse: collapse;
+    color: #c5112c;
+}
+
+td.pur {
+    font-size: 18px;
+}
+
+tr.pur {
+    background-color: #190375;
+    color: white ;
+}
+
+td button.pur{
+    color: #c5112c;
+
+}
+
+
+@media screen and (max-width: 1050px) {
+    .side-menuH li.pur{
+        font-size: 18px;
+        padding: 30px;
+    }
+}
+@media screen and (max-width: 940px){
+    .side-menuH li.pur span{
+        display: none;
+    }
+.side-menuH{
+    align-items: center;
+    height: 950px;
+}
+.side-menuH li.pur img.pur{
+    width: 40px;
+    height: 40px;
+}
+.side-menuH li.pur:hover{
+background: #ccc5cc;
+padding: 8px 38px;
+border: 2px solid white;
+}
+
+
+
+@media screen  and (max-width:536px){
+    .brand-nameH h1.pur{
+font-size: 16px;
+    }
+  .containerH .contentH .cardsH{
+    justify-content: center;
+  }  
+.side-menuH li.pur img.pur{
+    width: 30px;
+    height: 30px;
+}
+.containerH .contentH .content-2H .recent-paymentsH table.pur th.pur:nth-child(2),
+.containerH .contentH .content-2H .recent-paymentsH table.pur td.pur:nth-child(2){
+display:none ;    
+}
+
+}
+}
